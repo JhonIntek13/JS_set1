@@ -1,27 +1,34 @@
-function countVowelsAndDig(input) {
+function countVowelsAndDigits(input) {
   let vowelsCount = 0;
   let digitsCount = 0;
 
   const vowels = ['a', 'e', 'i', 'o', 'u'];
 
-  for (let char of input.toString().toLowerCase()) {
-    if (vowels.includes(char)) {
-      vowelsCount++;
-    } else if (/\d/.test(char)) {
-      digitsCount++;
-    }
-  }
-
   if (typeof input === 'string') {
-    return vowelsCount;
+    for (let char of input.toLowerCase()) {
+      if (vowels.includes(char)) {
+        vowelsCount++;
+      } else if (/\d/.test(char)) {
+        digitsCount++;
+      }
+    }
   } else if (typeof input === 'number') {
-    return digitsCount;
+    digitsCount = Math.floor(Math.log10(Math.abs(input))) + 1;
+
+    const numStr = input.toString();
+    for (let char of numStr) {
+      if (vowels.includes(char)) {
+        vowelsCount++;
+      }
+    }
   } else {
     throw new Error('Invalid input');
   }
+
+  return { vowelsCount, digitsCount };
 }
 
-console.log(countVowelsAndDig("Hello World")); // Output: 3 (vowelsCount)
-console.log(countVowelsAndDig("Example 123 ok 33")); // Output: 2 (vowelsCount)
-console.log(countVowelsAndDig(12345)); // Output: 5 (digitsCount)
-console.log(countVowelsAndDig(9876543210)); // Output: 0 (digitsCount)
+console.log(countVowelsAndDigits("Hello World")); // Output: { vowelsCount: 3, digitsCount: 0 }
+console.log(countVowelsAndDigits("Example 123 ok 33")); // Output: { vowelsCount: 5, digitsCount: 5 }
+console.log(countVowelsAndDigits(12345)); // Output: { vowelsCount: 0, digitsCount: 5 }
+console.log(countVowelsAndDigits(9876543210)); // Output: { vowelsCount: 0, digitsCount: 10 }

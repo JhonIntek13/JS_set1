@@ -1,6 +1,8 @@
 function copyProp(objA, objB, propList = null) {
+  const propsToCopy = new Set(propList);
+
   for (let prop in objB) {
-    if (propList === null || propList.includes(prop)) {
+    if (!propsToCopy || propsToCopy.has(prop)) {
       objA[prop] = objB[prop];
     }
   }
