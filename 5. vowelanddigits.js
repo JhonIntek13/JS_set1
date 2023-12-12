@@ -1,25 +1,18 @@
-function countVowelsOrDigits(input, countType) {
-  let count = 0;
+function countVowelsOrDigits(input) {
   const vowels = ['a', 'e', 'i', 'o', 'u'];
 
   if (typeof input === 'string') {
-    for (let char of input.toLowerCase()) {
-      if (countType === 'vowels' && vowels.includes(char)) {
-        count++;
-      } else if (countType === 'digits' && /\d/.test(char)) {
-        count++;
-      }
-    }
-  } else if (typeof input === 'number' && countType === 'digits') {
-    count = Math.floor(Math.log10(Math.abs(input)) + 1);
+    // Count vowels in the string
+    return Array.from(input.toLowerCase()).filter(char => vowels.includes(char)).length;
+  } else if (typeof input === 'number') {
+    // Calculate the number of digits using logarithms
+    return input === 0 ? 1 : Math.floor(Math.log10(Math.abs(input)) + 1);
   } else {
-    throw new Error('Invalid input');
+    throw new Error('Invalid input type');
   }
-
-  return count;
 }
 
-console.log(countVowelsOrDigits("Hello World", 'vowels')); // Output: 3
-console.log(countVowelsOrDigits("Example 123 ok 33", 'vowels')); // Output: 5
-console.log(countVowelsOrDigits(12345, 'digits')); // Output: 5
-console.log(countVowelsOrDigits(9876543210, 'digits')); // Output: 10
+console.log(countVowelsOrDigits("Hello World")); // Output for vowels: 3
+console.log(countVowelsOrDigits("Example 123 ok 33")); // Output for vowels: 4
+console.log(countVowelsOrDigits(12345)); // Output for digits: 5
+console.log(countVowelsOrDigits(9876543210)); // Output for digits: 10
